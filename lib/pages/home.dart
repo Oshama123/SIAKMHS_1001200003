@@ -1,0 +1,66 @@
+// ignore_for_file: prefer_const_constructors
+import 'package:flutter/material.dart';
+import 'package:siakmhs_1001200003/pages/jadwal_kuliah.dart';
+import 'package:siakmhs_1001200003/pages/profil.dart';
+import 'package:siakmhs_1001200003/pages/sub_menu.dart';
+import 'package:siakmhs_1001200003/pages/splash.dart';
+
+class Home extends StatefulWidget {
+  const Home({
+    Key? key,
+  }) : super(key: key);
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int selectedIndex = 1;
+  final pilihPageWidget = [
+    JadwalKuliah(),
+    SubMenu(),
+    Profil(),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 11, 128, 203),
+      appBar: AppBar(
+          leading: SizedBox(),
+          centerTitle: false,
+          title: Text("Sistem Akademik Mahasiswa"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Splash(),
+                    ));
+              },
+              icon: Icon(Icons.logout),
+            ),
+          ]),
+      body: Center(
+        child: pilihPageWidget.elementAt(selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.blue,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.black,
+          currentIndex: selectedIndex,
+          onTap: onItemTapped,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.schedule), label: "Jadwal Kuliah"),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profil"),
+          ]),
+    );
+  }
+
+  void onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+}
